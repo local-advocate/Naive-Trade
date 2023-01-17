@@ -15,21 +15,29 @@ def generate_data(fromm, to, n):
 
 def algo(n):
     global data
-    i = 0
-    while i < n-1:
-        pArr = []
-        while (i < n-1 and data[i] < data[i+1]):
-            pArr.append(data[i])
-            i += 1
-        profitArr.append(pArr)
-        print('Sell at ', i, '---', data[i])
-        while (i < n-1 and data[i] > data[i+1]):
-            i += 1
-        print('Buy at ', i, '---', data[i])
-    print(data, n)
-    print(profitArr)
+    tracker = data[0]
+    sold = False
+    i = 1
+    while (i < n):
+        curr = data[i]
+        tracker = data[i-1]
+        # If the latest data is less than previous data point
+        if (curr < tracker):
+            # and we are not all sold already
+            if not sold:
+                print('S-{0}-{1}'.format(i, curr))
+                sold = True
+        
+        # current price more than previous one
+        else:
+            # and we have not bought it already
+            if sold:
+                print('B-{0}-{1}'.format(i, curr))
+                sold = False
+        i += 1
         
 if __name__ == '__main__':
     fromm, to, n = 90, 100, 20
     generate_data(fromm, to, n)
     algo(n)
+    print(data)
