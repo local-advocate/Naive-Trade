@@ -62,7 +62,7 @@ def make_graph():
     plt.show()
 
 if __name__ == '__main__':
-    get_data('GOOGL', interval='1m')
+    get_data('AMZN', interval='5m')
     algo(data.size)
     print_stats()
     make_graph()
