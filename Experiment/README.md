@@ -48,6 +48,17 @@
    
    ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Experiment/images/discountAvgBad.png?raw=true)
    
+   We also miss out on high upward trends and spikes.
+   
+   ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Experiment/images/discUpwardMiss.png?raw=true)
+   
+   Here we prematurely sold at 51 (missing out the spike at 60).
+   
+   Likewise, we also miss out on not following downwards trends.
+   
+   ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Experiment/images/discDownwardMiss.png?raw=true)
+   
+   We could have sold way before the price got above average but significantly less than the buying price.
    
 ### 3. moreAlgo
 
