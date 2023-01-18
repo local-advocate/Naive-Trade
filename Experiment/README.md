@@ -28,22 +28,22 @@
 
 * Explaination
 
-   The idea here is to solve the problems of the simpleAlgo by taking a running average of the data.
+   The idea here is to solve the problems of the *simpleAlgo.py* by taking a running average of the data.
    We buy if the price is less than average and sell if the price is above average.  
    
-   average.py takes into account the average of the whole sequence while discountAverage only considers latest datapoints.
+   *average.py* takes into account the average of the whole sequence while *discountAverage.py* only considers latest datapoints.
    The lower the value of alpha, the better the running average.
    
 * Problems
 
-   The problem with average.py is that it does not provide accurate average (it does not forget the past data).
+   The problem with *average.py* is that it does not provide accurate average (it does not forget the past data).
    Thus, we again do not trade as much. It might work OK if the prices are consistent. However, that is quite rare.
     
    ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Experiment/images/averageBad.png?raw=true)  
    
    We only make few beneficial trade at the beginning only to incur losses when the price never comes back up.
    
-   The problem with discountAverage is the same as simpleAlgo.
+   The problem with *discountAverage* is the same as *simpleAlgo*.
    We have a much better average but we still end up buying on higher prices and sell at lower ones due to the nature of our algorithm.
    
    ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Experiment/images/discountAvgBad.png?raw=true)
@@ -53,7 +53,7 @@
 
 * Explaination
 
-   Bit of stdandar deviation
+   Bit of stdandard deviation.
    
 * Problems
 
