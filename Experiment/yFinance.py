@@ -5,6 +5,8 @@ data = []
 invest = 10000          # initial investment
 algoInvest = invest
 shares = 0
+soldArr = []
+boughtArr = []
 
 def get_data(ticker, period='1d', interval='5m'):
     global data
@@ -14,27 +16,33 @@ def get_data(ticker, period='1d', interval='5m'):
     
 
 def algo(n):
-    global invest, algoInvest, shares
+    global invest, algoInvest, shares, soldArr, boughtArr
+    buyPrice = data[0]
     tracker = data[0]
     sold = False
     shares = algoInvest / data[0]                   # Initial shares bought @ data[0]
     i = 1
+    boughtArr.append(0)
     while (i < n-1):
         curr = data[i]
         tracker = data[i-1]
         if (curr < tracker):
             if not sold:
-                #print('S-{0}-{1}'.format(i, curr))
+                # print('S-{0}-{1}'.format(i, curr))
                 algoInvest = shares*curr            # Available to invest = shares * current price
                 shares = 0
                 sold = True
+                soldArr.append(i)
         else:
             if sold:
-                #print('B-{0}-{1}'.format(i, curr))
+                # print('B-{0}-{1}'.format(i, curr))
                 shares = algoInvest/curr            # Total shares = Funds available / current price
                 algoInvest = 0
                 sold = False
+                buyPrice = curr
+                boughtArr.append(i)
         i += 1
+    soldArr.append(i)
     return
 
 def print_stats():
@@ -47,11 +55,14 @@ def print_stats():
 
 def make_graph():
     plt.plot(data)
-    plt.xticks([])
+    for xc in soldArr:
+        plt.axvline(x=xc, color='r', ls='dotted')
+    for xc in boughtArr:
+        plt.axvline(x=xc, color='g', ls='dotted')
     plt.show()
 
 if __name__ == '__main__':
-    get_data('TSLA', interval='1m')
+    get_data('GOOGL', interval='1m')
     algo(data.size)
     print_stats()
     make_graph()
