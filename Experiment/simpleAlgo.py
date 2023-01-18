@@ -1,6 +1,7 @@
 # Detect peaks and valleys
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 np.set_printoptions(precision=2)
 
@@ -8,8 +9,6 @@ np.set_printoptions(precision=2)
 data = []
 profitArr = []
 invest = 10000          # initial investment
-buyPrice = 0
-sellPrice = 0
 algoInvest = invest
 shares = 0
 
@@ -51,20 +50,21 @@ def algo(n):
         i += 1
     return
         
+def make_graph():
+    plt.plot(data)
+    plt.show()
+
 def print_stats(n):
-    print('Price array: ', data)
-    print('Profit array: ', profitArr)
+    # print('Price array: ', data)
+    # print('Profit array: ', profitArr)
     print('Initial investment($) {}'.format(invest))
     print('Total profit($) {:.2f}'.format(((invest/data[0])*data[n-1])-invest))
-    if (shares == 0):
-        print('Algo profit($) {:.2f}'.format(algoInvest-invest))
-    else:
-        print('Algo profit($) {:.2f}'.format((shares*data[n-1])-invest))
-    return
     
 if __name__ == '__main__':
-    fromm, to, n = 0, 100, 1000
+    fromm, to, n = 90, 100, 100
     endPrice = (fromm-to) * np.random.random() + to
     generate_data(fromm, to, n)
     algo(n)
     print_stats(n)
+    make_graph()
+    
