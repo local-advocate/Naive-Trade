@@ -60,7 +60,7 @@
    
    We could have sold way before the price got above average but significantly less than the buying price.
    
-### 3. moreAlgo
+### 3. deviation.py
 
 * Explaination
 
