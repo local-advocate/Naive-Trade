@@ -1,8 +1,10 @@
+# Just work with the average.
+
 import yfinance as yf
 import matplotlib.pyplot as plt
 
 data = []
-average = []
+averageArr = []
 
 def get_data(ticker, period='1d', interval='5m'):
     global data
@@ -13,23 +15,22 @@ def get_data(ticker, period='1d', interval='5m'):
 def algo(n):
     global average, data
     average = data[0]
-    sold = False
+    averageSum = data[0]
+    averageArr.append(data[0])
     i = 1
-    boughtArr.append(0)
     while (i < n-1):
-        
+        averageSum += data[i]
+        average = averageSum/(i+1)
+        averageArr.append(average)
+        i += 1
     return
 
 def make_graph():
-    plt.plot(data)
-    plt.plot(average, color='b')
-    for xc in soldArr:
-        plt.axvline(x=xc, color='r', ls='dotted')
-    for xc in boughtArr:
-        plt.axvline(x=xc, color='g', ls='dotted')
+    plt.plot(averageArr, color='b')
+    plt.plot(data, color='g')
     plt.show()
 
 if __name__ == '__main__':
-    get_data('GOOGL', interval='30m')
+    get_data('GOOGL', interval='1m')
     algo(data.size)
     make_graph()
