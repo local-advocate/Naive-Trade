@@ -1,24 +1,18 @@
 import numpy as np
+from discountedAverage import DiscountedAveragerator
+from dataCollector import DataCollector
+from grapher import Grapher
 
-# A smoother and effiecient implementation of sliding window average.
-class MovingAverage:
-    def __init__(self, alpha):      # lower the alpha, the less weight of the previous values
-        self.alpha = alpha
-        self.w = 0.
-        self.sum_x = 0.
-        self.sum_x_sq = 0.
 
-    def add(self, x):
-        self.w = self.alpha * self.w + 1.
-        self.sum_x = self.alpha * self.sum_x + x
-        self.sum_x_sq = self.alpha * self.sum_x_sq + x * x
 
-    @property
-    def avg(self):
-        return self.sum_x / self.w
-
-    @property
-    def std(self):
-        mu = self.avg
-        # The np.maximum is purely for safety.
-        return np.sqrt(np.maximum(0., self.sum_x_sq / self.w - mu * mu))
+if __name__ == '__main__':
+    info = {
+        'company': 'AMZN',
+        'period' : '1d',
+        'interval': '1m'
+    }
+    averagerator = DiscountedAveragerator(0.8)      # accurate alpha
+    collector = DataCollector(ticker=info['company'], period=info['period'], interval=info['interval'])
+    collector.gather()
+    grapher = Grapher(data=collector.data)
+    grapher.graphit()
