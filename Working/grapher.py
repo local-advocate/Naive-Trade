@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
 
 class Grapher:
-    def __init__(self, data=[], average=[], deviation=[], sell=[], buy=[]):
+    def __init__(self, data=[], average=[], deviation=[], sell=[], buy=[], stats=''):
         self.average = average
         self.deviation = deviation
         self.sell = sell
         self.buy = buy
         self.data = data
+        self.stats = stats
 
     def graphit(self):
         if len(self.data) != 0: plt.plot(self.data, color='b')                                    # plot data
@@ -19,4 +20,5 @@ class Grapher:
         if len(self.buy) != 0:                                                                    # plot buy
             for xc in self.buy:
                 plt.plot(xc, self.data[xc], 'go', markersize=4)
+        plt.annotate(text=self.stats, xy=(0.5, 1), xycoords='axes fraction')
         plt.show()

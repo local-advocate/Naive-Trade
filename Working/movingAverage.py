@@ -14,6 +14,7 @@ class MovingAverage():
         self.shares = 0
         self.invest = invest
         self.algoInvest = self.invest
+        self.stat = ''
     
     def algo(self):
         # Compare against data[0]
@@ -53,17 +54,21 @@ class MovingAverage():
         return
 
     def stats(self):
+        self.stat += 'Initial investment($) {}\n'.format(self.invest)
         print('Initial investment($) {}'.format(self.invest))
         # Buy at the beginning, self at the end price
+        self.stat += 'Total profit($) {:.2f}\n'.format(((self.invest/self.data[0])*self.data[-1])-self.invest)
         print('Total profit($) {:.2f}'.format(((self.invest/self.data[0])*self.data[-1])-self.invest))
         # All shares sold, remaining value v. what we started with
         if (self.shares == 0):
+            self.stat += 'Algo profit($) {:.2f}\n'.format(self.algoInvest-self.invest)
             print('Algo profit($) {:.2f}'.format(self.algoInvest-self.invest))
         # Shares remaining, sold at the end price
         else:
+            self.stat += 'Algo profit($) {:.2f}\n'.format((self.shares*self.data[-1])-self.invest)
             print('Algo profit($) {:.2f}'.format((self.shares*self.data[-1])-self.invest))
             self.sell.append(len(self.data)-1)
-
+        
 if __name__ == '__main__':
     # Company and Investment Info
     info = {
@@ -83,5 +88,5 @@ if __name__ == '__main__':
     mavg.stats()
     
     # Graph the results
-    grapher = Grapher(data=collector.data, average=mavg.average, sell=mavg.sell, buy=mavg.buy)
+    grapher = Grapher(data=collector.data, average=mavg.average, sell=mavg.sell, buy=mavg.buy, stats=mavg.stat)
     grapher.graphit()
