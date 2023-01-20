@@ -8,8 +8,10 @@ The algorithms also show statistics (total profit, etc.) and graphs (share price
 
 ## Folders
 
-1. Experiment&emsp;&emsp;:&emsp;Contains files and experimental algorithms alongwith details about their descriptions, results, and problems. 
-2. Working&emsp;&emsp;&emsp;&nbsp;:&emsp;Contains structured and organized files implementing better algorithms alongwith description of their details.
+1. Experiment
+   * Contains files and experimental algorithms alongwith details about their descriptions, results, and problems. 
+2. Working
+   * Contains structured and organized files implementing better algorithms alongwith description of their details.
 
 ## How to Run
 
