@@ -20,5 +20,6 @@ class Grapher:
         if len(self.buy) != 0:                                                                    # plot buy
             for xc in self.buy:
                 plt.plot(xc, self.data[xc], 'go', markersize=4)
-        plt.annotate(text=self.stats, xy=(0.5, 1), xycoords='axes fraction')
+        plt.annotate(text=self.stats, xy=(0.4, 0.9), xycoords='axes fraction',
+                    family='cursive', size='smaller', bbox={'boxstyle':'round'})
         plt.show()
