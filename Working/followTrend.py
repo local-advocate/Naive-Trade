@@ -1,0 +1,1 @@
+# Make trades looking at trends (sell if downwards, buy if upwards).
