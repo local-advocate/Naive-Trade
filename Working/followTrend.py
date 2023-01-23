@@ -77,7 +77,7 @@ class FollowTrend():
 if __name__ == '__main__':
     # Company and Investment Info
     info = {
-        'company': 'NVDA',
+        'company': 'AMZN',
         'period' : '1d',
         'interval': '1m',
         'invest': 10000
