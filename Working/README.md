@@ -17,8 +17,21 @@
    Thus, we end up incurring great losses.
    * We need a way to follow the trends.
    
+2. BOLL Bands Visualization (*bollBands.py*)
+   
+   * Displays upper and lower BOLL bands alongwith the average and the shaded area in between.  
+   
+   Usage:
+   ```
+   python bollBands.py
+   ```
+   
+   Output:  
+   ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Working/Demos/BOLLBands.png)  
+   
 ## Files
 1. dataCollector.py&emsp;&emsp;&emsp;&ensp;:&emsp;Collects data of a given *ticker* within an *interval* and *period*. 
 2. discountedAverage.py&emsp;:&emsp;Calculates the moving average given an *alpha* (*alpha* ∝ accuracy of average). 
 3. grapher.py&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;Graphs the results (*prices*, *sells*, *averages*, etc.).
 4. movingAverage.py&emsp;&emsp;&ensp;:&emsp;Implementation of the *Moving Average* algorithm.
+5. bollBands.py&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;Visualization of BOLL bands.
