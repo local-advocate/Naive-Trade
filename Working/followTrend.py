@@ -80,7 +80,7 @@ if __name__ == '__main__':
         'company': 'NVDA',
         'period' : '1d',
         'interval': '1m',
-        'invest': 1000
+        'invest': 10000
     }
     
     # Collect data
