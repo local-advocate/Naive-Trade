@@ -13,6 +13,7 @@ class BollBands():
         self.upper = []
         self.lower = []
         self.average = []
+        self.iArr = [0]
         self.times = times
     
     def algo(self):
@@ -36,14 +37,16 @@ class BollBands():
             self.average.append(average)
             self.upper.append(average + self.times * deviation)
             self.lower.append(average - self.times * deviation)
+            self.iArr.append(i)
             i += 1
         return
     
     def graph(self):
-        plt.plot(self.data, color='b')                       # plot data
-        plt.plot(self.average, color='m')                    # plot average
-        plt.plot(self.upper)                      # plot upper band
-        plt.plot(self.lower)                      # plot lower band
+        plt.plot(self.data, color='0')                                    # plot data
+        plt.plot(self.average, color='m', ls='dashed')                    # plot average
+        plt.plot(self.upper, color='m')                      # plot upper band
+        plt.plot(self.lower, color='m')                      # plot lower band
+        plt.fill_between(x=self.iArr, y1=self.upper, y2=self.lower, color='c')
         plt.show()
         
 if __name__ == '__main__':
