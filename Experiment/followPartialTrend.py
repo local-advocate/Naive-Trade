@@ -3,13 +3,12 @@
 # https://stackoverflow.com/questions/20329545/how-to-check-if-a-sequence-of-numbers-has-a-increasing-decreasing-trend-in-c
 
 import numpy as np
-from discountedAverage import DiscountedAveragerator
+from DiscountedAveragerator import DiscountedAveragerator
 from dataCollector import DataCollector
 from grapher import Grapher
 
-# The moving average algorithm
-class FollowTrend():
-    def __init__(self, data, alpha, invest, buyPoints):
+class FollowPartialTrend():
+    def __init__(self, data, alpha, invest, buyPoints, start):
         self.data = data
         self.averagerator = DiscountedAveragerator(alpha=alpha)
         self.sell = []
@@ -21,17 +20,18 @@ class FollowTrend():
         self.stat = ''
         self.buyPoints = buyPoints
         self.boughtPrice = 0
-        
+        self.start = start
+    
     def algo(self):
         
         # watch initial points
-        for i in range(self.buyPoints):
+        for i in range(self.start, self.buyPoints):
             self.averagerator.add(self.data[i])
             self.average.append(self.averagerator.avg)
         
         # Initialize variables
         bought = False
-        i = self.buyPoints
+        i = self.start+self.buyPoints
         n = len(self.data)
         
         while (i < n-1):
@@ -56,6 +56,7 @@ class FollowTrend():
                 self.boughtPrice = curr
             i += 1
         return
+    
 
     def stats(self):
         self.stat += 'Initial investment($) {}\n'.format(self.invest)
@@ -75,20 +76,23 @@ class FollowTrend():
             print('Profit($) {:.2f}\n'.format(self.boughtPrice*self.shares - self.invest))
         
 if __name__ == '__main__':
+    split = 4
     # Company and Investment Info
     info = {
         'company': 'AMZN',
         'period' : '1d',
         'interval': '1m',
-        'invest': 10000
+        'invest': 10000/split
     }
     
     # Collect data
     collector = DataCollector(ticker=info['company'], period=info['period'], interval=info['interval'])
     collector.gather()
     
+    print(len(collector.data)/split)
+    
     # Run Algo & Print Stats
-    ft = FollowTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3)
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=0)
     ft.algo()
     ft.stats()
     
