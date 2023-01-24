@@ -25,13 +25,13 @@ class FollowPartialTrend():
     def inject(self, amount, start):
         n = len(self.data)
         shares = 0
-        amount = amount
         bought = False
         boughtPrice = 0
-        while (start < n-1):
+        profit = 0
+        while (start < n):
             curr = self.data[start]
             # average decreasing, sell if bought
-            if (bought and curr > boughtPrice and self.average[start] < self.average[start-2]):
+            if (bought and curr > boughtPrice and self.average[start] < self.average[start-1]):
                 amount = shares*curr            # Available to invest = shares * current price
                 shares = 0
                 bought = False
@@ -39,12 +39,13 @@ class FollowPartialTrend():
             # average increasing trend, and not bought
             elif (not bought and self.average[start] > self.average[start-self.buyPoints]):
                 shares = amount/curr            # Total shares = Funds available / current price
+                profit = amount - (self.invest/self.split)
                 amount = 0
                 bought = True
                 self.buy.append(start)
                 boughtPrice = curr
             start += 1
-        return {'profit': amount, 'shares': shares}
+        return {'profit': profit, 'shares': shares}
     
     
     def calculate_avg(self):
@@ -55,7 +56,7 @@ class FollowPartialTrend():
         # Initialize variables
         i = 1
         n = len(self.data)
-        while (i < n-1):
+        while (i < n):
             curr = self.data[i]
             # calc new average
             self.averagerator.add(curr)
@@ -66,15 +67,17 @@ class FollowPartialTrend():
     
     def algo(self):
         self.calculate_avg()
-        # start = self.buyPoints
-        # amount = self.invest/self.split
-        # length = len(self.data)
-        # for _ in range(self.split):
-        #     res = self.inject(amount=amount, start=start)
-        #     self.totalProfit += res['profit']
-        #     self.totalShares += res['shares']
-        #     start += (length//self.split)
-        # return
+        start = self.buyPoints
+        amount = self.invest/self.split
+        print('Start: {:.2f}. Amount {:.2f}.'.format(start, amount))
+        length = len(self.data)
+        for _ in range(self.split):
+            res = self.inject(amount=amount, start=start)
+            self.totalProfit += res['profit']
+            self.totalShares += res['shares']
+            start += (length//self.split)
+            # print('Start: {:.2f}. Amount: {:.2f}. Profit: {:.2f}. Shares: {:.2f}.'.format(start, amount, res['profit'], res['shares']))
+        return
     
     def stats(self):
         self.stat += 'Initial investment($) {}\n'.format(self.invest)
@@ -84,9 +87,9 @@ class FollowPartialTrend():
         print('Total profit($) {:.2f}'.format(((self.invest/self.data[0])*self.data[-1])-self.invest))
         # All shares sold, remaining value v. what we started with
         self.stat += 'Shares remaining {:.2f}\n'.format(self.totalShares)
-        self.stat += 'Profit($) {:.2f}\n'.format(self.totalProfit - self.invest)
+        self.stat += 'Algo Profit($) {:.2f}\n'.format(self.totalProfit)
         print('Shares remaining {:.2f}'.format(self.totalShares))
-        print('Profit($) {:.2f}\n'.format(self.totalProfit - self.invest))
+        print('Algo Profit($) {:.2f}\n'.format(self.totalProfit))
         
 if __name__ == '__main__':
     split = 7
@@ -95,7 +98,7 @@ if __name__ == '__main__':
         'company': 'AMZN',
         'period' : '1d',
         'interval': '1m',
-        'invest': 10000/split
+        'invest': 1000
     }
     
     # Collect data
@@ -103,10 +106,10 @@ if __name__ == '__main__':
     collector.gather()
     
     # Run Algo & Print Stats
-    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, split=10)
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, split=100)
     ft.algo()
     ft.stats()
     
-    # Graph the results
+    # # Graph the results
     g1 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
     g1.graphit()
