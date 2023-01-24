@@ -7,6 +7,7 @@ from DiscountedAveragerator import DiscountedAveragerator
 from dataCollector import DataCollector
 from grapher import Grapher
 from matplotlib import pyplot as plt
+import math
 
 class FollowPartialTrend():
     def __init__(self, data, alpha, invest, buyPoints, split):
@@ -69,13 +70,12 @@ class FollowPartialTrend():
         self.calculate_avg()
         start = self.buyPoints
         amount = self.invest/self.split
-        print('Start: {:.2f}. Amount {:.2f}.'.format(start, amount))
         length = len(self.data)
         for _ in range(self.split):
             res = self.inject(amount=amount, start=start)
             self.totalProfit += res['profit']
             self.totalShares += res['shares']
-            start += (length//self.split)
+            start += math.ceil(length/self.split)
             # print('Start: {:.2f}. Amount: {:.2f}. Profit: {:.2f}. Shares: {:.2f}.'.format(start, amount, res['profit'], res['shares']))
         return
     
@@ -91,6 +91,28 @@ class FollowPartialTrend():
         print('Shares remaining {:.2f}'.format(self.totalShares))
         print('Algo Profit($) {:.2f}\n'.format(self.totalProfit))
         
+    def graph(self):
+        plt.figure()
+        plt.xlim(0, len(self.data))
+        plt.plot(self.data, color='b')                                    # plot data
+        plt.plot(self.average, color='m', ls='dashed')                    # plot average
+        for xc in self.sell:
+            plt.plot(xc, self.data[xc], 'ro', markersize=4)
+        for xc in self.buy:
+            plt.plot(xc, self.data[xc], 'go', markersize=4)
+        start = self.buyPoints
+        length = len(self.data)
+        splitArr = []
+        for _ in range(self.split):
+            splitArr.append(start)
+            start += math.ceil(length/self.split)
+        for xc in splitArr:
+            plt.axvline(x=xc, color='c', ls='dotted')
+        # plt.axvspan(0, len(self.data),facecolor='w')
+        plt.annotate(text=self.stat, xy=(0.4, 0.9), xycoords='axes fraction',
+                    family='cursive', size='smaller', bbox={'boxstyle':'round'})
+        plt.show()
+        
 if __name__ == '__main__':
     split = 7
     # Company and Investment Info
@@ -98,7 +120,7 @@ if __name__ == '__main__':
         'company': 'AMZN',
         'period' : '1d',
         'interval': '1m',
-        'invest': 1000
+        'invest': 10000
     }
     
     # Collect data
@@ -109,7 +131,4 @@ if __name__ == '__main__':
     ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, split=100)
     ft.algo()
     ft.stats()
-    
-    # # Graph the results
-    g1 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
-    g1.graphit()
+    ft.graph()
