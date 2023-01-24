@@ -22,4 +22,4 @@ class Grapher:
                 plt.plot(xc, self.data[xc], 'go', markersize=4)
         plt.annotate(text=self.stats, xy=(0.4, 0.9), xycoords='axes fraction',
                     family='cursive', size='smaller', bbox={'boxstyle':'round'})
-        plt.draw()
+        plt.show()
