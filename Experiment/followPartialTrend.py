@@ -6,6 +6,7 @@ import numpy as np
 from DiscountedAveragerator import DiscountedAveragerator
 from dataCollector import DataCollector
 from grapher import Grapher
+from matplotlib import pyplot as plt
 
 class FollowPartialTrend():
     def __init__(self, data, alpha, invest, buyPoints, start):
@@ -25,7 +26,7 @@ class FollowPartialTrend():
     def algo(self):
         
         # watch initial points
-        for i in range(self.start, self.buyPoints):
+        for i in range(self.buyPoints):
             self.averagerator.add(self.data[i])
             self.average.append(self.averagerator.avg)
         
@@ -76,7 +77,7 @@ class FollowPartialTrend():
             print('Profit($) {:.2f}\n'.format(self.boughtPrice*self.shares - self.invest))
         
 if __name__ == '__main__':
-    split = 4
+    split = 7
     # Company and Investment Info
     info = {
         'company': 'AMZN',
@@ -89,13 +90,112 @@ if __name__ == '__main__':
     collector = DataCollector(ticker=info['company'], period=info['period'], interval=info['interval'])
     collector.gather()
     
-    print(len(collector.data)/split)
+    print(len(collector.data))
+    totalProfit = 0
+    totalSharesRem = 0
     
+    # INTERVAL 1
     # Run Algo & Print Stats
     ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=0)
     ft.algo()
     ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
     
     # Graph the results
     grapher = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
     grapher.graphit()
+    
+    # INTERVAL 2
+    # Run Algo & Print Stats
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=31)
+    ft.algo()
+    ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
+    
+    # Graph the results
+    g1 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    g1.graphit()
+    
+    # INTERVAL 3
+    # Run Algo & Print Stats
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=31+31)
+    ft.algo()
+    ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
+    
+    # Graph the results
+    g2 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    g2.graphit()
+
+    # INTERVAL 4
+    # Run Algo & Print Stats
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=31+31+31)
+    ft.algo()
+    ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
+    
+    # Graph the results
+    g3 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    g3.graphit()
+
+    # INTERVAL 5
+    # Run Algo & Print Stats
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=31+31+31+31)
+    ft.algo()
+    ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
+
+    # Graph the results
+    g4 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    g4.graphit()
+    
+    # INTERVAL 6
+    # Run Algo & Print Stats
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=31+31+31+31+31)
+    ft.algo()
+    ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
+
+    # Graph the results
+    g5 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    g5.graphit()
+    
+    # INTERVAL 7
+    # Run Algo & Print Stats
+    ft = FollowPartialTrend(data=collector.data, alpha=0.8, invest=info['invest'], buyPoints=3, start=31+31+31+31+31+31)
+    ft.algo()
+    ft.stats()
+    if (ft.shares == 0): totalProfit += ft.algoInvest-ft.invest
+    else: 
+        totalSharesRem += ft.shares
+        totalProfit += (ft.boughtPrice*ft.shares - ft.invest)
+        
+    # Graph the results
+    g6 = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    g6.graphit()
+    
+    print('Total profit {:.2f}'.format(totalProfit))
+    print('Total sharesRem {:.2f}'.format(totalSharesRem))
+    plt.show()
+    
+    # # Graph the results
+    # grapher = Grapher(data=collector.data, average=ft.average, sell=ft.sell, buy=ft.buy, stats=ft.stat)
+    # grapher.graphit()
