@@ -79,6 +79,30 @@
    * The results of this "improved" algorithm are worse than that of the previous one primarily because
    we have low investments at every split(s) and we trade too heavily (for short profits).
    
+5. RSI Visualization (*RSI.py*)
+   
+   * Displays the *Relative Strength Index* indicator of a stock. Parameters are adjustable.  
+   
+   Usage:
+   ```
+   python RSI.py
+   ```
+   
+   Output:   
+   ![alt text]() 
+   
+6. MACD Visualization (*MACD.py*)
+   
+   * Displays the *Moving average convergence/divergence* indicator of a stock. Parameters are adjustable.  
+   
+   Usage:
+   ```
+   python MACD.py
+   ```
+   
+   Output:   
+   ![alt text]()
+   
 ## Files
 1. dataCollector.py&emsp;&emsp;&emsp;&ensp;:&emsp;Collects data of a given *ticker* within an *interval* and *period*. 
 2. discountedAverage.py&emsp;:&emsp;Calculates the moving average given an *alpha* (*alpha* ∝ accuracy of average). 
@@ -86,4 +110,6 @@
 4. movingAverage.py&emsp;&emsp;&ensp;:&emsp;Implementation of the *Moving Average* algorithm.
 5. bollBands.py&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;Visualization of BOLL bands.
 6. followTrend.py&emsp;&emsp;&emsp;&emsp;&nbsp;:&emsp;Buy on increasing average trends, sell on decreasing averages.
-7. followPartialTrends&emsp;&emsp;&ensp;:&emsp;An attempt to buy on most of the increasing average trends, sell on decreasing averages.
+7. followPartialTrends.py&emsp;:&emsp;An attempt to buy on most of the increasing average trends, sell on decreasing averages.
+8. RSI.py&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;:&emsp;Visualization of the RSI indicator.
+9. MACD.py&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;:&emsp;Visualization of the MACD indicator.
