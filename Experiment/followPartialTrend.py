@@ -108,13 +108,11 @@ class FollowPartialTrend():
             start += math.ceil(length/self.split)
         for xc in splitArr:
             plt.axvline(x=xc, color='c', ls='dotted')
-        # plt.axvspan(0, len(self.data),facecolor='w')
         plt.annotate(text=self.stat, xy=(0.4, 0.9), xycoords='axes fraction',
                     family='cursive', size='smaller', bbox={'boxstyle':'round'})
         plt.show()
         
 if __name__ == '__main__':
-    split = 7
     # Company and Investment Info
     info = {
         'company': 'AMZN',
