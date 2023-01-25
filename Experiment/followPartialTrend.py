@@ -5,7 +5,6 @@
 import numpy as np
 from DiscountedAveragerator import DiscountedAveragerator
 from dataCollector import DataCollector
-from grapher import Grapher
 from matplotlib import pyplot as plt
 import math
 
