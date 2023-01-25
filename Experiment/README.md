@@ -1,3 +1,5 @@
+## ***THIS IS FOR PESONAL USE ONLY. PLEASE SEE THE 'WORKING' DIRECTORY FOR BETTER DETAILS!***
+
 # Algorithms
 ### 1. simpleAlgo.py/yFinance.py
 
