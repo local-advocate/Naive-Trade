@@ -26,7 +26,7 @@
    python bollBands.py
    ```
    
-   Output:  
+   Output:   
    ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Working/Demos/BOLLBands.png) 
    
 3. Follow Trends (*followTrend.py*)
@@ -52,6 +52,32 @@
    buying price.
    * For example, at the end of the above graph, we miss out on the last drastic price increase.
    * One possible solution is to implement partial buying (separate buy prices to follow multiple trends).
+     
+4. Follow Partial Trends (*followPartialTrend.py*)
+   
+   * An attempt to solve the issues discovered in the *Follow Trends* algorithm.
+   * Here we split the investment into separate parts. In doing so, we are able to buy on most trends by splitting our
+   investment over time instead of investing it all at once.
+   * Selling is similar to the previous algoirthm i.e. we sell immediately if the average decreases (and the selling price is higher than the buying price)
+   because for the average to decrease rapidly the price must have changed drastically.
+   * Thus, more splits correlate with less chances of missing out as we can see in the figures below.
+   
+   Usage:
+   ```
+   python followPartialTrend.py
+   ```
+   
+   Output:  
+   *10 splits*  
+   ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Working/Demos/FollowPartialTrends10.png)  
+   *50 splits*  
+   ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Working/Demos/FollowPartialTrends50.png)  
+   *100 splits*  
+   ![alt text](https://github.com/rp247/Naive-Trade/blob/main/Working/Demos/FollowPartialTrends100.png)  
+   
+   Problems:
+   * The results of this "improved" algorithm are worse than that of the previous one primarily because
+   we have low investments at every split(s) and we trade too heavily (for short profits).
    
 ## Files
 1. dataCollector.py&emsp;&emsp;&emsp;&ensp;:&emsp;Collects data of a given *ticker* within an *interval* and *period*. 
@@ -60,3 +86,4 @@
 4. movingAverage.py&emsp;&emsp;&ensp;:&emsp;Implementation of the *Moving Average* algorithm.
 5. bollBands.py&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;Visualization of BOLL bands.
 6. followTrend.py&emsp;&emsp;&emsp;&emsp;&nbsp;:&emsp;Buy on increasing average trends, sell on decreasing averages.
+7. followPartialTrends&emsp;&emsp;&ensp;:&emsp;An attempt to buy on most of the increasing average trends, sell on decreasing averages.
